@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "701776477236",
+    "project_id": "krivishaapp",
+    "storage_bucket": "krivishaapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701776477236:android:51486a434e24f58d509e61",
+        "android_client_info": {
+          "package_name": "com.quick.krivisha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD888pkt2orUuYBMP0btpEkA6siAK7Lch0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
