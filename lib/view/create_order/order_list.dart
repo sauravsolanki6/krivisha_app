@@ -756,33 +756,69 @@ class _CreateOrderListState extends State<CreateOrderList> {
                                                   ),
                                                   Row(
                                                     children: [
-                                                      Text(
-                                                        'Order ID: ${order.orderId}',
-                                                        style: const TextStyle(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.black54,
+                                                      if (_getTaskStatusLabel(order
+                                                                  .orderStatus)
+                                                              .toLowerCase() ==
+                                                          'pending')
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  left: 8.0),
+                                                          child: OutlinedButton(
+                                                            style:
+                                                                OutlinedButton
+                                                                    .styleFrom(
+                                                              side: const BorderSide(
+                                                                  color: AppColors
+                                                                      .primary),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                      horizontal:
+                                                                          12,
+                                                                      vertical:
+                                                                          8),
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8),
+                                                              ),
+                                                            ),
+                                                            onPressed: () {
+                                                              Get.to(() =>
+                                                                  EditOrderPage(
+                                                                      order:
+                                                                          order));
+                                                              log('Edit order: ${order.orderId}');
+                                                            },
+                                                            child: const Text(
+                                                              'Edit Order',
+                                                              style: TextStyle(
+                                                                color: AppColors
+                                                                    .primary,
+                                                                fontSize: 14,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      IconButton(
-                                                        icon: const Icon(
-                                                          Icons.edit,
-                                                          color:
-                                                              AppColors.primary,
-                                                          size: 20,
-                                                        ),
-                                                        onPressed: () {
-                                                          Get.to(() =>
-                                                              EditOrderPage(
-                                                                order: order,
-                                                              ));
-                                                          log('Edit order: ${order.orderId}');
-                                                        },
-                                                      ),
                                                     ],
                                                   ),
                                                 ],
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                'Order ID: ${order.orderId}',
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black54,
+                                                ),
                                               ),
                                               const SizedBox(height: 8),
                                               Text(
@@ -801,23 +837,27 @@ class _CreateOrderListState extends State<CreateOrderList> {
                                                 ),
                                               ),
                                               const SizedBox(height: 4),
-                                              Text(
-                                                'Ink Type: ${_getInkType(order.inkType)}',
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.black45,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                'Articles: $subDetailsSummary',
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.black45,
-                                                ),
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
+                                              order.inkType != null &&
+                                                      order.inkType!.isNotEmpty
+                                                  ? Text(
+                                                      'Ink Type: ${_getInkType(order.inkType)}',
+                                                      style: const TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.black45,
+                                                      ),
+                                                    )
+                                                  : const SizedBox.shrink(),
+
+                                              // const SizedBox(height: 4),
+                                              // Text(
+                                              //   'Articles: $subDetailsSummary',
+                                              //   style: const TextStyle(
+                                              //     fontSize: 12,
+                                              //     color: Colors.black45,
+                                              //   ),
+                                              //   maxLines: 2,
+                                              //   overflow: TextOverflow.ellipsis,
+                                              // ),
                                               const SizedBox(height: 4),
                                               Row(
                                                 mainAxisAlignment:
@@ -832,7 +872,7 @@ class _CreateOrderListState extends State<CreateOrderList> {
                                                     ),
                                                   ),
                                                   Text(
-                                                    'Status: ${_getTaskStatusLabel(order.orderStatus)}',
+                                                    '${_getTaskStatusLabel(order.orderStatus)}',
                                                     style: TextStyle(
                                                       fontSize: 12,
                                                       color: _getStatusColor(

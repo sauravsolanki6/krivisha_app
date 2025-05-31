@@ -714,7 +714,9 @@ class _CreateOrderState extends State<CreateOrder> {
                                                         value)['id'];
                                           }),
                                           validator: (value) =>
-                                              value == null ? 'Required' : null,
+                                              value == null || value.isEmpty
+                                                  ? 'Required'
+                                                  : null, // Enhanced validation
                                         ),
                                         if (_selectedOrderType ==
                                             'Container') ...[
@@ -732,9 +734,11 @@ class _CreateOrderState extends State<CreateOrder> {
                                                       brand['brand_name'] ==
                                                       value)['id'];
                                             }),
-                                            validator: (value) => value == null
+                                            validator: (value) => value ==
+                                                        null ||
+                                                    value.isEmpty
                                                 ? 'Required'
-                                                : null,
+                                                : null, // Enhanced validation
                                           ),
                                         ],
                                         const SizedBox(height: 12),
@@ -742,14 +746,16 @@ class _CreateOrderState extends State<CreateOrder> {
                                           controller: row['orderQuantity'],
                                           label: 'Order Quantity*',
                                           keyboardType: TextInputType.number,
-                                          validator: (value) => value!.isEmpty
-                                              ? 'Required'
-                                              : null,
+                                          validator: (value) =>
+                                              value == null || value.isEmpty
+                                                  ? 'Required'
+                                                  : null, // Existing validation
                                         ),
                                         const SizedBox(height: 12),
                                         _buildTextField(
-                                            controller: row['remark'],
-                                            label: 'Remark'),
+                                          controller: row['remark'],
+                                          label: 'Remark',
+                                        ),
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: IconButton(
@@ -765,7 +771,7 @@ class _CreateOrderState extends State<CreateOrder> {
                                   ),
                                 );
                               },
-                            ),
+                            )
                           ],
                           const SizedBox(height: 20),
                           Center(

@@ -249,7 +249,7 @@ class _EditOrderPageState extends State<EditOrderPage> {
       }
     } catch (e) {
       setState(() => _isLoading = false);
-      _showSnackBar('Error fetching article types: $e', Colors.redAccent);
+      _showSnackBar('No article types available', Colors.redAccent);
     }
   }
 
@@ -820,7 +820,9 @@ class _EditOrderPageState extends State<EditOrderPage> {
                                                         value)['id'];
                                           }),
                                           validator: (value) =>
-                                              value == null ? 'Required' : null,
+                                              value == null || value.isEmpty
+                                                  ? 'Required'
+                                                  : null, // Enhanced validation
                                         ),
                                         if (_selectedOrderType ==
                                             'Container') ...[
@@ -838,9 +840,11 @@ class _EditOrderPageState extends State<EditOrderPage> {
                                                       brand['brand_name'] ==
                                                       value)['id'];
                                             }),
-                                            validator: (value) => value == null
+                                            validator: (value) => value ==
+                                                        null ||
+                                                    value.isEmpty
                                                 ? 'Required'
-                                                : null,
+                                                : null, // Enhanced validation
                                           ),
                                         ],
                                         const SizedBox(height: 12),
@@ -848,14 +852,16 @@ class _EditOrderPageState extends State<EditOrderPage> {
                                           controller: row['orderQuantity'],
                                           label: 'Order Quantity*',
                                           keyboardType: TextInputType.number,
-                                          validator: (value) => value!.isEmpty
-                                              ? 'Required'
-                                              : null,
+                                          validator: (value) =>
+                                              value == null || value.isEmpty
+                                                  ? 'Required'
+                                                  : null, // Existing validation
                                         ),
                                         const SizedBox(height: 12),
                                         _buildTextField(
-                                            controller: row['remark'],
-                                            label: 'Remark'),
+                                          controller: row['remark'],
+                                          label: 'Remark',
+                                        ),
                                         Align(
                                           alignment: Alignment.centerRight,
                                           child: IconButton(
@@ -871,7 +877,7 @@ class _EditOrderPageState extends State<EditOrderPage> {
                                   ),
                                 );
                               },
-                            ),
+                            )
                           ],
                           const SizedBox(height: 20),
                           Center(
@@ -958,27 +964,27 @@ class _EditOrderPageState extends State<EditOrderPage> {
   }
 
   Future<void> _onRefresh() async {
-    setState(() {
-      _isLoading = true;
-      _offset = 0;
-      partyOrderData.clear();
-      _storedEntries.clear();
-      _tableRows.clear();
-      _disableDropdowns = false;
-      _selectedPartyName = null;
-      _selectedPartyId = null;
-      _selectedOrderType = null;
-      _selectedOrderTypeId = null;
-      _selectedContainerType = null;
-      _selectedContainerTypeId = null;
-      _selectedArticleGroup = null;
-      _selectedArticleGroupId = null;
-      _isArticleGroupValid = true;
-      articleTypeData.clear();
-      brandTypeData.clear();
-      _editingIndex = null;
-      _addTableRow();
-    });
+    // setState(() {
+    //   _isLoading = true;
+    //   _offset = 0;
+    //   partyOrderData.clear();
+    //   _storedEntries.clear();
+    //   _tableRows.clear();
+    //   _disableDropdowns = false;
+    //   _selectedPartyName = null;
+    //   _selectedPartyId = null;
+    //   _selectedOrderType = null;
+    //   _selectedOrderTypeId = null;
+    //   _selectedContainerType = null;
+    //   _selectedContainerTypeId = null;
+    //   _selectedArticleGroup = null;
+    //   _selectedArticleGroupId = null;
+    //   _isArticleGroupValid = true;
+    //   articleTypeData.clear();
+    //   brandTypeData.clear();
+    //   _editingIndex = null;
+    //   _addTableRow();
+    // });
 
     try {
       await Future.wait([
