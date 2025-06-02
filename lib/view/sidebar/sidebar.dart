@@ -9,6 +9,8 @@ import 'package:krivisha_app/view/signUp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../../controller/dashboard/dashboard_controller.dart';
+import '../Production/add_production.dart';
+import '../Production/production_list.dart';
 import '../create_order/order_list.dart';
 import '../maintainance/add_maintainance.dart';
 import '../maintainance/maintainance_list.dart';
@@ -64,31 +66,28 @@ class _SideBarState extends State<SideBar> {
             ),
           ),
           Divider(color: AppColors.primary, thickness: 1.0),
-          _buildOrdersItem(), // Re
+          _buildOrdersItem(),
+          _buildProduction(), // Re
           _buildSidebarItem(
             icon: CupertinoIcons.create,
             title: 'Add Task',
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddTask()),
-                ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddTask()),
+            ),
           ),
-          _buildSidebarItem(
-            icon: CupertinoIcons.create,
-            title: 'Web View',
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder:
-                        (context) => WebViewPage(
-                          url:
-                              'https://seekhelp.in/krivisha/production_form_list/139',
-                        ),
-                  ),
-                ),
-          ),
+          // _buildSidebarItem(
+          //   icon: CupertinoIcons.create,
+          //   title: 'Web View',
+          //   onTap: () => Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //       builder: (context) => WebViewPage(
+          //         url: 'https://seekhelp.in/krivisha/production_form_list/139',
+          //       ),
+          //     ),
+          //   ),
+          // ),
           _buildTaskListItem(),
           _buildOutwardTransportItem(),
           _buildPrintingItem(),
@@ -96,11 +95,10 @@ class _SideBarState extends State<SideBar> {
           _buildSidebarItem(
             icon: CupertinoIcons.bell,
             title: 'Notifications',
-            onTap:
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NotificationPage()),
-                ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => NotificationPage()),
+            ),
           ),
           _buildSidebarItem(
             icon: Icons.logout,
@@ -137,22 +135,64 @@ class _SideBarState extends State<SideBar> {
         _buildSubItem(
           icon: CupertinoIcons.add_circled,
           title: 'Create Order',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => CreateOrder()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateOrder()),
+          ),
         ),
         _buildSubItem(
           icon: CupertinoIcons.list_bullet,
           title: 'Order List',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CreateOrderList(),
-                ), // Replace with your OrderList page
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateOrderList(),
+            ), // Replace with your OrderList page
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProduction() {
+    return ExpansionTile(
+      leading: Container(
+        padding: EdgeInsets.all(6),
+        decoration: BoxDecoration(
+          color: AppColors.primary.withOpacity(0.1),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(CupertinoIcons.doc, color: AppColors.primary, size: 18),
+      ),
+      title: Text(
+        'Production',
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.black87,
+        ),
+      ),
+      tilePadding: EdgeInsets.symmetric(horizontal: 12),
+      childrenPadding: EdgeInsets.only(left: 40),
+      iconColor: Colors.grey.shade500,
+      children: [
+        _buildSubItem(
+          icon: CupertinoIcons.add_circled,
+          title: 'Add Production',
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddProduction()),
+          ),
+        ),
+        _buildSubItem(
+          icon: CupertinoIcons.list_bullet,
+          title: 'Production List',
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductionList(),
+            ), // Replace with your OrderList page
+          ),
         ),
       ],
     );
@@ -237,20 +277,18 @@ class _SideBarState extends State<SideBar> {
         _buildSubItem(
           icon: CupertinoIcons.doc_text,
           title: 'Manual Task',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ManualTaskList()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ManualTaskList()),
+          ),
         ),
         _buildSubItem(
           icon: CupertinoIcons.doc_text,
           title: 'Auto Task',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AutoTaskList()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AutoTaskList()),
+          ),
         ),
       ],
     );
@@ -285,38 +323,34 @@ class _SideBarState extends State<SideBar> {
         _buildSubItem(
           icon: CupertinoIcons.add_circled,
           title: 'Add Transport',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddTransport()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddTransport()),
+          ),
         ),
         _buildSubItem(
           icon: CupertinoIcons.list_bullet,
           title: 'Transport List',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TransportList()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TransportList()),
+          ),
         ),
         _buildSubItem(
           icon: CupertinoIcons.car,
           title: 'Own Vehicle',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OwnVehicle()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => OwnVehicle()),
+          ),
         ),
         _buildSubItem(
           icon: CupertinoIcons.list_bullet,
           title: 'Vehicle List',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OwnVehicleList()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => OwnVehicleList()),
+          ),
         ),
       ],
     );
@@ -347,20 +381,18 @@ class _SideBarState extends State<SideBar> {
         _buildSubItem(
           icon: CupertinoIcons.add_circled,
           title: 'Add Printing',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddPrinting()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddPrinting()),
+          ),
         ),
         _buildSubItem(
           icon: CupertinoIcons.list_bullet,
           title: 'Printing Report List',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => PrintingListPage()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PrintingListPage()),
+          ),
         ),
       ],
     );
@@ -391,20 +423,18 @@ class _SideBarState extends State<SideBar> {
         _buildSubItem(
           icon: CupertinoIcons.add_circled,
           title: 'Add Maintenance',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddMaintenancePage()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddMaintenancePage()),
+          ),
         ),
         _buildSubItem(
           icon: CupertinoIcons.list_bullet,
           title: 'Maintenance List',
-          onTap:
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MaintenanceList()),
-              ),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MaintenanceList()),
+          ),
         ),
       ],
     );
@@ -528,10 +558,9 @@ class _WebViewPageState extends State<WebViewPage> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    _controller =
-        WebViewController()
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse(widget.url));
+    _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(widget.url));
   }
 
   @override
@@ -549,21 +578,20 @@ class _WebViewPageState extends State<WebViewPage> {
   Future<bool> _onWillPop() async {
     return await showDialog(
           context: context,
-          builder:
-              (context) => AlertDialog(
-                title: const Text('Confirm'),
-                content: const Text('Are you sure you want to go back?'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: const Text('No'),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(true),
-                    child: const Text('Yes'),
-                  ),
-                ],
+          builder: (context) => AlertDialog(
+            title: const Text('Confirm'),
+            content: const Text('Are you sure you want to go back?'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('No'),
               ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('Yes'),
+              ),
+            ],
+          ),
         ) ??
         false;
   }

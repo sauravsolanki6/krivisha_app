@@ -178,15 +178,14 @@ class _MaintenanceListState extends State<MaintenanceList> {
     final TextEditingController mwocodeController = TextEditingController(
       text: _mwoCodeFilter,
     );
-    String? selectedMaintenanceRequired =
-        _maintenanceRequiredFilter.isNotEmpty
-            ? maintenanceRequiredMap.entries
-                .firstWhere(
-                  (entry) => entry.value == _maintenanceRequiredFilter,
-                  orElse: () => const MapEntry('', ''),
-                )
-                .key
-            : null;
+    String? selectedMaintenanceRequired = _maintenanceRequiredFilter.isNotEmpty
+        ? maintenanceRequiredMap.entries
+            .firstWhere(
+              (entry) => entry.value == _maintenanceRequiredFilter,
+              orElse: () => const MapEntry('', ''),
+            )
+            .key
+        : null;
     final TextEditingController fromDateController = TextEditingController(
       text: _fromDateFilter,
     );
@@ -286,13 +285,12 @@ class _MaintenanceListState extends State<MaintenanceList> {
                         fillColor: Colors.grey.shade50,
                       ),
                       value: selectedMaintenanceRequired,
-                      items:
-                          maintenanceRequiredMap.keys.map((String key) {
-                            return DropdownMenuItem<String>(
-                              value: key,
-                              child: Text(key),
-                            );
-                          }).toList(),
+                      items: maintenanceRequiredMap.keys.map((String key) {
+                        return DropdownMenuItem<String>(
+                          value: key,
+                          child: Text(key),
+                        );
+                      }).toList(),
                       onChanged: (value) {
                         setModalState(() {
                           selectedMaintenanceRequired = value;
@@ -394,7 +392,8 @@ class _MaintenanceListState extends State<MaintenanceList> {
                                 _mwoCodeFilter = mwocodeController.text;
                                 _maintenanceRequiredFilter =
                                     selectedMaintenanceRequired != null
-                                        ? maintenanceRequiredMap[selectedMaintenanceRequired]!
+                                        ? maintenanceRequiredMap[
+                                            selectedMaintenanceRequired]!
                                         : '';
                                 _fromDateFilter = fromDateController.text;
                                 _toDateFilter = toDateController.text;
@@ -588,223 +587,222 @@ class _MaintenanceListState extends State<MaintenanceList> {
           onRefresh: _onRefresh,
           color: Colors.blue,
           backgroundColor: Colors.white,
-          child:
-              _isLoading
-                  ? _buildShimmer()
-                  : _orders.isEmpty
+          child: _isLoading
+              ? _buildShimmer()
+              : _orders.isEmpty
                   ? const Center(child: Text('No maintenance records found'))
                   : ListView.builder(
-                    controller: _scrollController,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.all(16.0),
-                    itemCount: _orders.length + (_isLoadingMore ? 1 : 0),
-                    itemBuilder: (context, index) {
-                      if (index == _orders.length && _isLoadingMore) {
-                        return const Center(
-                          child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: CircularProgressIndicator(),
-                          ),
-                        );
-                      }
-                      final order = _orders[index];
-                      return Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          side: BorderSide(
-                            color: Colors.grey.shade300,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(12),
-                          onTap: () {
-                            // Get the MaintenanceController instance
-                            final MaintenanceController maintenanceController =
-                                Get.put(MaintenanceController());
-
-                            // Store the selected maintenance order in the controller
-                            maintenanceController.setSelectedMaintenance(order);
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MaintenanceDetailsPage(),
-                              ),
-                            );
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 8,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    color: _getStatusColor(order.status),
-                                    borderRadius: const BorderRadius.horizontal(
-                                      left: Radius.circular(12),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'ID: ${order.id}',
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                          Text(
-                                            'MWO Code: ${order.mwoCode}',
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black54,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        'Plant Name: ${order.plantName}',
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Employee Name: ${order.firstName}',
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black45,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Action Type: ${_getActionTypeName(order.typeOfAction)}',
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black45,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Maintenance Type: ${order.maintenanceType}',
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black45,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Type Name: ${order.typeName}',
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black45,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Problems: ${order.problems}',
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black45,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        'Date: ${_formatDateToIndian(order.date)}',
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black45,
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Status: ${order.status == '1'
-                                                ? 'Pending'
-                                                : order.status == '2'
-                                                ? 'Completed'
-                                                : ''}',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: _getStatusColor(
-                                                order.status,
-                                              ),
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 40,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.grey.shade300,
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                            child: IconButton(
-                                              icon: const Icon(
-                                                Icons.edit,
-                                                color: Colors.blue,
-                                                size: 24,
-                                              ),
-                                              onPressed: () {
-                                                // Get the MaintenanceController instance
-                                                final MaintenanceController
-                                                maintenanceController = Get.put(
-                                                  MaintenanceController(),
-                                                );
-
-                                                // Store the selected maintenance order in the controller
-                                                maintenanceController
-                                                    .setSelectedMaintenance(
-                                                      order,
-                                                    );
-
-                                                // Navigate to EditMaintainance using Navigator.pushReplacement
-                                                Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder:
-                                                        (context) =>
-                                                            EditMaintainance(),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                      controller: _scrollController,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.all(16.0),
+                      itemCount: _orders.length + (_isLoadingMore ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (index == _orders.length && _isLoadingMore) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        }
+                        final order = _orders[index];
+                        return Card(
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            side: BorderSide(
+                              color: Colors.grey.shade300,
+                              width: 1.0,
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(12),
+                            onTap: () {
+                              // Get the MaintenanceController instance
+                              final MaintenanceController
+                                  maintenanceController =
+                                  Get.put(MaintenanceController());
+
+                              // Store the selected maintenance order in the controller
+                              maintenanceController
+                                  .setSelectedMaintenance(order);
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      MaintenanceDetailsPage(),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 8,
+                                    height: 120,
+                                    decoration: BoxDecoration(
+                                      color: _getStatusColor(order.status),
+                                      borderRadius:
+                                          const BorderRadius.horizontal(
+                                        left: Radius.circular(12),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'ID: ${order.id}',
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                            Text(
+                                              'MWO Code: ${order.mwoCode}',
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'Plant Name: ${order.plantName}',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Employee Name: ${order.firstName}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Action Type: ${_getActionTypeName(order.typeOfAction)}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Maintenance Type: ${order.maintenanceType}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Type Name: ${order.typeName}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Problems: ${order.problems}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Date: ${_formatDateToIndian(order.date)}',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black45,
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Status: ${order.status == '1' ? 'Pending' : order.status == '2' ? 'Completed' : ''}',
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: _getStatusColor(
+                                                  order.status,
+                                                ),
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.grey.shade300,
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: IconButton(
+                                                icon: const Icon(
+                                                  Icons.edit,
+                                                  color: Colors.blue,
+                                                  size: 24,
+                                                ),
+                                                onPressed: () {
+                                                  // Get the MaintenanceController instance
+                                                  final MaintenanceController
+                                                      maintenanceController =
+                                                      Get.put(
+                                                    MaintenanceController(),
+                                                  );
+
+                                                  // Store the selected maintenance order in the controller
+                                                  maintenanceController
+                                                      .setSelectedMaintenance(
+                                                    order,
+                                                  );
+
+                                                  // Navigate to EditMaintainance using Navigator.pushReplacement
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditMaintainance(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
         ),
         backgroundColor: Colors.grey.shade100,
       ),
